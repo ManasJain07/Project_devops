@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Feedback Form</title>
+
+    <!-- Internal CSS Only -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('./lang.jpeg');
+            background-repeat: no-repeat;
+            background-size: 120%;
+            width: fit-content;
+        }
+
+        h2 {
+            text-align: center;
+            color: #c30000;
+            margin-bottom: 20px;
+        }
+
+
+
+        .form-container {
+            width: 450px;
+            margin: 60px auto;
+            padding: 25px;
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 60px;
+            opacity: 0.85;
+            align-content: center;
+            border-radius: 30px;
+            margin-left: 560px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: 600;
+            color: #011428;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 90%;
+            padding: 15px;
+            margin-top: 6px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        .gender {
+            margin-top: 8px;
+        }
+
+        .gender input {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            width: 45%;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        input[type="submit"] {
+            background-color: #030381;
+            color: white;
+        }
+
+        input[type="reset"] {
+            background-color: #e44c3be8;
+            color: white;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #38d523;
+            transform: scale(1.05);
+        }
+
+        input[type="reset"]:hover {
+            background-color: #bc0000;
+            transform: scale(1.05);
+        }
+    </style>
+
+    <!-- JavaScript Validation -->
+    <script>
+        function validateForm() {
+            let name = document.forms["feedbackForm"]["studentName"].value.trim();
+            let email = document.forms["feedbackForm"]["email"].value.trim();
+            let mobile = document.forms["feedbackForm"]["mobile"].value.trim();
+            let department = document.forms["feedbackForm"]["department"].value;
+            let feedback = document.forms["feedbackForm"]["feedback"].value.trim();
+
+            let gender = document.getElementsByName("gender");
+            let genderSelected = false;
+
+            // Name validation
+            if (name === "") {
+                alert("Student Name cannot be empty");
+                return false;
+            }
+
+            // Email validation
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Enter a valid Email ID");
+                return false;
+            }
+
+            // Mobile validation
+            let mobilePattern = /^[0-9]{10}$/;
+            if (!mobilePattern.test(mobile)) {
+                alert("Enter a valid 10-digit Mobile Number");
+                return false;
+            }
+
+            // Department validation
+            if (department === "") {
+                alert("Please select a Department");
+                return false;
+            }
+
+            // Gender validation
+            for (let i = 0; i < gender.length; i++) {
+                if (gender[i].checked) {
+                    genderSelected = true;
+                    break;
+                }
+            }
+            if (!genderSelected) {
+                alert("Please select Gender");
+                return false;
+            }
+
+            // Feedback validation (minimum 10 words)
+            let words = feedback.split(/\s+/).filter(word => word.length > 0);
+            if (words.length < 10) {
+                alert("Feedback must contain at least 10 words");
+                return false;
+            }
+
+            alert("Form submitted successfully!");
+            return true;
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div class="form-container">
+        <img src='sit_1.png' style="width: 85%;height: 100%; padding: 8px; margin-left: 15px;">
+        <h2>Student Feedback Registration Form</h2>
+
+        <form name="feedbackForm" onsubmit="return validateForm()">
+
+            <label>Student Name:</label>
+            <input type="text" name="studentName">
+
+            <label>Email ID:</label>
+            <input type="text" name="email">
+
+            <label>Mobile Number:</label>
+            <input type="text" name="mobile">
+
+            <label>Department:</label>
+            <select name="department">
+                <option value="">--Select--</option>
+                <option>CSE</option>
+                <option>Ai/ML</option>
+                <option>DS</option>
+                <option>Cloud</option>
+                <option>CYBER</option>
+            </select>
+
+            <label>Gender:</label>
+            <div class="gender">
+                <input type="radio" name="gender" value="Male"> Male
+                <input type="radio" name="gender" value="Female"> Female
+                <input type="radio" name="gender" value="Prefer Not To Say"> Prefer Not To Say
+            </div>
+
+            <label>Feedback Comments:</label>
+            <textarea name="feedback" rows="4"></textarea>
+
+            <div class="buttons">
+                <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
+            </div>
+
+        </form>
+    </div>
+</body>
+
+</html>
